@@ -12,6 +12,7 @@
                     <table>
                         <thead>
                             <tr>
+                                <th>Row Number</th>
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Registered at</th>
@@ -19,14 +20,36 @@
                         </thead>
                         {{-- Task: add the loop here to show users, or the row "No content" --}}
                         <tbody>
-                            <tr>
-                                <td>{{ $user->name }}</td>
-                                <td>{{ $user->email }}</td>
-                                <td>{{ $user->created_at }}</td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">No content.</td>
-                            </tr>
+                            @if($users->count() == 0)
+                                <tr>
+                                    <td colspan="4">No content.</td>
+                                </tr>
+                            @else
+                                @foreach ($users as $user)
+                                
+                                    <tr 
+                                        class="
+                                            @if ($loop->even)
+                                                bg-red-100
+                                            @endif
+                                        "
+                                    >
+                                        <td>{{ $loop->index }}</td>
+                                        <td>{{ $user->name }}</td>
+                                        <td 
+                                            class="
+                                                @if ($loop->first)
+                                                    font-bold
+                                                @endif
+                                            "
+                                        >
+                                            {{ $user->email }}
+                                        </td>
+                                        <td>{{ $user->created_at }}</td>
+                                    </tr>
+                                    
+                                @endforeach
+                            @endif
                         </tbody>
                     </table>
                 </div>
